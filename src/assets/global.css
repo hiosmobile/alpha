@@ -40,6 +40,10 @@
   --glass-tint: rgba(255, 255, 255, 0.62);
   --glass-border: rgba(0, 0, 0, 0.08);
   --glass-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+
+  --radius-card: 42px;     /* For large containers like the bottom sheet */
+  --radius-medium: 22px;   /* For the bottom nav and FAB */
+  --radius-small: 14px;    /* For smaller buttons and icons */
 }
 
 /* Dark Mode Overrides */
@@ -135,11 +139,12 @@ html, body {
   color: var(--icon-active-color);
   width: 64px;
   height: 32px;
-  border-radius: 50px;
+  border-radius: var(--radius-card);
   display: flex;
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s ease, color 0.3s ease;
+  corner-shape: squircle;
 }
 
 .inactiveIcon {
@@ -160,16 +165,16 @@ html, body {
   width: 56px;
   height: 56px;
   background-color: var(--fab-bg);
+  border: 1px solid var(--outline);
   color: var(--fab-color);
-  border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   cursor: pointer;
   z-index: 1001;
-  border: none;
   transition: background-color 0.3s ease, color 0.3s ease, bottom 0.3s ease, right 0.3s ease;
+  border-radius: var(--radius-card) !important;
+  corner-shape: squircle;
 }
 
 .fab i {
@@ -197,7 +202,7 @@ html, body {
   bottom: 20px;
   left: 16px;
   right: 16px;
-  background: var(--glass-tint);
+  background-color: var(--background);
   color: var(--text-color);
   padding: 24px;
   z-index: 2001;
@@ -206,10 +211,9 @@ html, body {
   max-width: 600px;
   margin: 0 auto;
   border: 1px solid var(--glass-border);
-  border-radius: 40px;
   box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(18px) saturate(165%);
-  -webkit-backdrop-filter: blur(18px) saturate(165%);
+  border-radius: var(--radius-card);
+  corner-shape: squircle;
 }
 
 .bottom-sheet.open {
@@ -234,17 +238,15 @@ html, body {
   padding: 16px;
   background-color: var(--sheet-button-bg);
   color: var(--sheet-button-color);
-  border: none;
-  border-radius: 40px;
-  margin-bottom: 10px;
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-card);
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
   font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(18px) saturate(165%);
-  -webkit-backdrop-filter: blur(18px) saturate(165%);
+  corner-shape: squircle;
 }
 
 .sheet-button i {
@@ -309,21 +311,20 @@ html, body {
   transform: translateX(-50%);
   z-index: 1000;
   height: auto;
-  min-height: 44px; /* Reduced height for a tighter pill look */
+  min-height: 44px;
   width: max-content;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0.3em 1em; /* Reduced horizontal padding */
+  max-width: 90vw;
+  margin: 0;
+  padding: 8px 24px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--glass-tint);
-  border: 1px solid var(--glass-border);
-  border-radius: 25px;
+  background-color: var(--background);
+  border: 1px solid var(--outline);
   box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(18px) saturate(165%);
-  -webkit-backdrop-filter: blur(18px) saturate(165%);
+  border-radius: var(--radius-card);
+  corner-shape: squircle;
 }
 
 .side-rail ul {
@@ -332,20 +333,28 @@ html, body {
   padding: 0;
   display: flex;
   align-items: center;
-  gap: 3rem; /* Expanded gap spacing */
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.side-rail ul li {
+  margin: 0;
+  padding: 0;
 }
 
 .side-rail ul li a {
   display: flex;
-  width: 100%;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 0.3em 0.5em;
+  padding: 8px 16px;
   color: var(--onPrimaryContainer);
   text-decoration: none;
-  font-weight: 400;
-  border-radius: 20px;
+  font-weight: 500;
+  border-radius: var(--radius-card);
   transition: color 0.3s ease, background-color 0.3s ease;
+  white-space: nowrap;
+  corner-shape: squircle;
 }
 
 .side-rail a:hover {
@@ -369,16 +378,19 @@ html, body {
   width: 90%;       
   max-width: 500px; 
   height: 60px;
-  border-radius: 100px; 
+  border-radius: var(--radius-card); 
   display: flex;
   justify-content: space-around;
   align-items: center; 
   z-index: 1000;
   box-shadow: var(--glass-shadow);
-  background: var(--glass-tint);
+  background-color: var(--background);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(18px) saturate(165%);
   -webkit-backdrop-filter: blur(18px) saturate(165%);
+  transform: translate3d(-50%, 0, 0);
+  will-change: transform, backdrop-filter;
+  corner-shape: squircle;
 }
 
 .material-symbols-rounded {
@@ -409,12 +421,12 @@ html, body {
 
   /* Invert the rounding: the web content curves inward below the top bar */
   .main-content, .top-bar-wrapper-container iframe {
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
+    border-top-left-radius: var(--radius-card);
+    border-top-right-radius: var(--radius-card);
     background-color: var(--surface);
-    box-shadow: 0 -4px 24px var(--glass-border);
     position: relative;
     z-index: 10;
+    corner-shape: squircle;
   }
 
   .bottom-sheet {
@@ -430,17 +442,18 @@ html, body {
 
   /* Elevate both app containers into a beautiful canvas */
   .app-container, .top-bar-wrapper-container {
-    padding: 60px 16px 16px 16px; /* Thick top for integrated nav, thin sides/bottom */
+    padding: 72px 16px 16px 16px; /* Thick top for integrated nav, thin sides/bottom */
     background-color: var(--background);
   }
 
   /* Transform the content and iframes into rounded floating islands */
   .main-content, .top-bar-wrapper-container iframe {
-    border-radius: 40px; 
+    border-radius: var(--radius-card); 
     border: 1px solid var(--glass-border);
     box-shadow: 0 32px 64px rgba(0,0,0,0.15); 
     overflow: hidden; 
     background-color: var(--surface);
+    corner-shape: squircle;
   }
 
   /* Float the top navigation seamlessly inside the thick top padding */
@@ -458,12 +471,10 @@ html, body {
     width: max-content;
     min-width: 300px;
     justify-content: center;
-    border: 1px solid var(--glass-border);
-    border-radius: 25px;
-    background: var(--glass-tint);
-    backdrop-filter: blur(18px) saturate(165%);
-    -webkit-backdrop-filter: blur(18px) saturate(165%);
-    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--outline);
+    border-radius: var(--radius-card);
+    background: var(--background);
+    corner-shape: squircle;
   }
   
   .top-bar-wrapper-container .back-button {
@@ -473,7 +484,7 @@ html, body {
 
   /* Adjust FAB to stay visually aligned inside the rounded border */
   .fab {
-    bottom: 40px; 
-    right: 40px;  
+    top: 8px;
+    right: 16px; 
   }
 }
